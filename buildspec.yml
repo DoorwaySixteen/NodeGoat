@@ -17,7 +17,7 @@ env:
     CX_FLOW_FILTER_STATUS: ""
     CX_FLOW_FILTER_STATE: ""
     CX_FLOW_ENABLED_VULNERABILITY_SCANNERS: sast
-    CX_TEAM: "/CxServer/"
+    CX_TEAM: "/CxServer"
     CX_FLOW_BREAK_BUILD: "false"
     SCA_FILTER_SEVERITY: ""
     SCA_FILTER_SCORE: ""
