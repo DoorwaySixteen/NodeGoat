@@ -22,7 +22,7 @@ env:
     SCA_FILTER_SEVERITY: ""
     SCA_FILTER_SCORE: ""
     SCA_THRESHOLDS_SCORE: ""
-    SCA_TEAM: ""
+    SCA_TEAM: "/CxServer/SCA-PM/Champions/PSNA/PatrickMichael"
     PARAMS: ""
 phases: 
   pre_build: 
