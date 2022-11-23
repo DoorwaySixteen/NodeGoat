@@ -10,8 +10,7 @@ pool:
   name: Default
 
 steps:
-- script: echo Hello, world!
-          ipconfig
+- script: ipconfig
   displayName: 'Run a one-line script'
 
 - task: Application security testing@2022
