@@ -11,9 +11,9 @@ pool:
 
 steps:
 - script: ipconfig
-  displayName: 'Run a one-line script'
+  displayName: 'Network Read'
 
-- task: Application security testing@2022
+- task: CxSAST@2022
   inputs:
     projectName: 'NodeGoat'
     enableProxy: false
