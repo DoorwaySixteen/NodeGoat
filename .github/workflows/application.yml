@@ -48,9 +48,10 @@ jobs:
 
         break_build: false
         scanners: sast, sca
-        bug_tracker: JIRA
-        bug_tracker_impl: Sarif
+        bug_tracker: Sarif
+        bug_tracker_impl: JIRA, GITHUB
         
+        APP: NodeGoat
         JIRA_URL: ${{ secrets.JIRA_URL }} 
         JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
         JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
@@ -60,6 +61,8 @@ jobs:
         JIRA_CLOSE_TRANSITION: Done 
         JIRA_OPEN_STATUS: To Do, In Progress
         JIRA_CLOSED_STATUS: Done
+        ISSUE_PREFIX: CHECKMARX
+
         
         params: --namespace=${{ github.repository_owner }} \
                 --repo-name=${{ github.event.repository.name }} \
@@ -67,6 +70,7 @@ jobs:
                 --cx-flow.filterSeverity \
                 --cx-flow.filterCategory \  
                 --checkmarx.disable-clubbing=true
+                
     
     
     - name: Upload SARIF file
