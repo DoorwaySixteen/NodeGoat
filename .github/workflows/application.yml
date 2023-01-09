@@ -15,7 +15,7 @@
 ##TESTING CHANGES
 
 
-name: Checkmarx SAST Scan
+name: Checkmarx Security Scan
 on:
   push:
     branches:
@@ -31,7 +31,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     
-    - name: Checkmarx CxFlow Action
+    - name: Checkmarx CxFlow Action SAST
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.5 #Github Action version
       with:
         project: NodeGoat # <-- Insert Checkmarx SAST Project Name
@@ -41,19 +41,18 @@ jobs:
         checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }} # To be stored in GitHub Secrets.
         checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }} # To be stored in GitHub Secrets.
 
-        sca_api_url: https://api.scacheckmarx.com
-        sca_app_url: https://sca.scacheckmarx.com
-        sca_access_control_url: https://platform.checkmarx.net
-        sca_tenant: ${{ secrets.SCATENANT }}  # <-- Insert Checkmarx CxSCA Tenant
-        sca_username: ${{ secrets.CHECKMARX_SCA_USERNAME }} # To be stored in GitHub Secrets.
-        sca_password: ${{ secrets.CHECKMARX_SCA_PASSWORD }} # To be stored in GitHub Secrets.
+        #sca_api_url: https://api.scacheckmarx.com
+        #sca_app_url: https://sca.scacheckmarx.com
+        #sca_access_control_url: https://platform.checkmarx.net
+        #sca_tenant: ${{ secrets.SCATENANT }}  # <-- Insert Checkmarx CxSCA Tenant
+        #sca_username: ${{ secrets.CHECKMARX_SCA_USERNAME }} # To be stored in GitHub Secrets.
+        #sca_password: ${{ secrets.CHECKMARX_SCA_PASSWORD }} # To be stored in GitHub Secrets.
 
         break_build: false
-        scanners: sast, sca
+        scanners: sast
         bug_tracker: Sarif
         bug_tracker_impl: JIRA, GITHUB
         
-        APP: NodeGoat
         JIRA_URL: ${{ secrets.JIRA_URL }} 
         JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
         JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
@@ -63,19 +62,65 @@ jobs:
         JIRA_CLOSE_TRANSITION: Done 
         JIRA_OPEN_STATUS: To Do, In Progress
         JIRA_CLOSED_STATUS: Done
-        ISSUE_PREFIX: CHECKMARX
+        JIRA_ISSUE_PREFIX: CX-SAST
 
         
         params: --namespace=${{ github.repository_owner }} \
                 --repo-name=${{ github.event.repository.name }} \
                 --branch=${{ github.ref }} \
+                --app=NodeGoat
                 --cx-flow.filterSeverity \
                 --cx-flow.filterCategory \  
                 --checkmarx.disable-clubbing=true
                 
-    
-    
-    - name: Upload SARIF file
+    - name: Upload SAST SARIF file
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: cx.sarif
+        
+    - name: Checkmarx CxFlow Action SCA
+      uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.5 #Github Action version
+      with:
+        project: NodeGoat # <-- Insert Checkmarx SAST Project Name
+        #team: ${{ secrets.CHECKMARX_TEAMS }}
+        #checkmarx_url: ${{ secrets.CHECKMARX_URL }} # To be stored in GitHub Secrets.
+        #checkmarx_username: ${{ secrets.CHECKMARX_USER }} # To be stored in GitHub Secrets.
+        #checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }} # To be stored in GitHub Secrets.
+        #checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }} # To be stored in GitHub Secrets.
+
+        sca_api_url: https://api.scacheckmarx.com
+        sca_app_url: https://sca.scacheckmarx.com
+        sca_access_control_url: https://platform.checkmarx.net
+        sca_tenant: ${{ secrets.SCATENANT }}  # <-- Insert Checkmarx CxSCA Tenant
+        sca_username: ${{ secrets.CHECKMARX_SCA_USERNAME }} # To be stored in GitHub Secrets.
+        sca_password: ${{ secrets.CHECKMARX_SCA_PASSWORD }} # To be stored in GitHub Secrets.
+
+        break_build: false
+        scanners: SCA
+        bug_tracker: Sarif
+        bug_tracker_impl: JIRA, GITHUB
+        
+        JIRA_URL: ${{ secrets.JIRA_URL }} 
+        JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
+        JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+        JIRA_PROJECT: NOD
+        JIRA_ISSUE_TYPE: BUG
+        JIRA_OPEN_TRANSITION: In Progress
+        JIRA_CLOSE_TRANSITION: Done 
+        JIRA_OPEN_STATUS: To Do, In Progress
+        JIRA_CLOSED_STATUS: Done
+        JIRA_ISSUE_PREFIX: CX-SCA
+
+        
+        params: --namespace=${{ github.repository_owner }} \
+                --repo-name=${{ github.event.repository.name }} \
+                --branch=${{ github.ref }} \
+                --app=NodeGoat
+                --cx-flow.filterSeverity \
+                --cx-flow.filterCategory \  
+                --checkmarx.disable-clubbing=true
+                
+    - name: Upload SCA SARIF file
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: cx.sarif
