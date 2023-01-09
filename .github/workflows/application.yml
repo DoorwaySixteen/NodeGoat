@@ -48,8 +48,25 @@ jobs:
 
         break_build: false
         scanners: sast, sca
-        bug_tracker: Sarif
-        params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --cx-flow.filterSeverity --cx-flow.filterCategory  --checkmarx.disable-clubbing=true
+        bug_tracker: JIRA
+        bug_tracker_impl: Sarif
+        
+        JIRA_URL: ${{ secret.JIRA_URL }} 
+        JIRA_USERNAME: ${{ secret.JIRA_USERNAME }}
+        JIRA_TOKEN: ${{ secret.JIRA_TOKEN }}
+        JIRA_PROJECT: NOD
+        JIRA_ISSUE_TYPE: BUG
+        JIRA_OPEN_TRANSITION: In Progress
+        JIRA_CLOSE_TRANSITION: Done 
+        JIRA_OPEN_STATUS: To Do, In Progress
+        JIRA_CLOSED_STATUS: Done
+        
+        params: --namespace=${{ github.repository_owner }} \
+                --repo-name=${{ github.event.repository.name }} \
+                --branch=${{ github.ref }} \
+                --cx-flow.filterSeverity \
+                --cx-flow.filterCategory \  
+                --checkmarx.disable-clubbing=true
     
     
     - name: Upload SARIF file
