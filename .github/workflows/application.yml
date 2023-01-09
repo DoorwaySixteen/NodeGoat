@@ -51,7 +51,6 @@ jobs:
         break_build: false
         scanners: sast
         bug_tracker: Sarif
-        bug_tracker_impl: JIRA, GITHUB
         
         JIRA_URL: ${{ secrets.JIRA_URL }} 
         JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
@@ -62,16 +61,16 @@ jobs:
         JIRA_CLOSE_TRANSITION: Done 
         JIRA_OPEN_STATUS: To Do, In Progress
         JIRA_CLOSED_STATUS: Done
-        JIRA_ISSUE_PREFIX: CX-SAST
-
-        
+   
         params: --namespace=${{ github.repository_owner }} \
                 --repo-name=${{ github.event.repository.name }} \
                 --branch=${{ github.ref }} \
                 --app=NodeGoat
                 --cx-flow.filterSeverity \
                 --cx-flow.filterCategory \  
-                --checkmarx.disable-clubbing=true
+                --checkmarx.disable-clubbing=true \
+                --bug-tracker-impl="JIRA" \
+                --jira.issue.prefix="CX-SAST"
                 
     - name: Upload SAST SARIF file
       uses: github/codeql-action/upload-sarif@v1
@@ -98,7 +97,6 @@ jobs:
         break_build: false
         scanners: SCA
         bug_tracker: Sarif
-        bug_tracker_impl: JIRA, GITHUB
         
         JIRA_URL: ${{ secrets.JIRA_URL }} 
         JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
@@ -109,8 +107,6 @@ jobs:
         JIRA_CLOSE_TRANSITION: Done 
         JIRA_OPEN_STATUS: To Do, In Progress
         JIRA_CLOSED_STATUS: Done
-        JIRA_ISSUE_PREFIX: CX-SCA
-
         
         params: --namespace=${{ github.repository_owner }} \
                 --repo-name=${{ github.event.repository.name }} \
@@ -118,7 +114,9 @@ jobs:
                 --app=NodeGoat
                 --cx-flow.filterSeverity \
                 --cx-flow.filterCategory \  
-                --checkmarx.disable-clubbing=true
+                --checkmarx.disable-clubbing=true \
+                --bug-tracker-impl="JIRA" \
+                --jira.issue.prefix="CX-SCA"
                 
     - name: Upload SCA SARIF file
       uses: github/codeql-action/upload-sarif@v1
