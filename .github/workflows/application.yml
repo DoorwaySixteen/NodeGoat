@@ -50,7 +50,7 @@ jobs:
 
         break_build: false
         scanners: sast
-        bug_tracker: Sarif
+        bug_tracker: JIRA,SARIF
         
         JIRA_URL: ${{ secrets.JIRA_URL }} 
         JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
@@ -69,7 +69,6 @@ jobs:
                 --cx-flow.filterSeverity \
                 --cx-flow.filterCategory \  
                 --checkmarx.disable-clubbing=true \
-                --bug-tracker-impl="JIRA" \
                 --jira.issue.prefix="CX-SAST"
                 
     - name: Upload SAST SARIF file
@@ -96,7 +95,7 @@ jobs:
 
         break_build: false
         scanners: SCA
-        bug_tracker: Sarif
+        bug_tracker: JIRA, Sarif
         
         JIRA_URL: ${{ secrets.JIRA_URL }} 
         JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
@@ -115,7 +114,6 @@ jobs:
                 --cx-flow.filterSeverity \
                 --cx-flow.filterCategory \  
                 --checkmarx.disable-clubbing=true \
-                --bug-tracker-impl="JIRA" \
                 --jira.issue.prefix="CX-SCA"
                 
     - name: Upload SCA SARIF file
