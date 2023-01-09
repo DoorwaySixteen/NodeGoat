@@ -50,7 +50,7 @@ jobs:
 
         break_build: false
         scanners: sast
-        bug_tracker: JIRA,SARIF
+        bug_tracker: JIRA
         
         JIRA_URL: ${{ secrets.JIRA_URL }} 
         JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
@@ -71,10 +71,10 @@ jobs:
                 --checkmarx.disable-clubbing=true \
                 --jira.issue.prefix="CX-SAST"
                 
-    - name: Upload SAST SARIF file
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: cx.sarif
+    #- name: Upload SAST SARIF file
+    #  uses: github/codeql-action/upload-sarif@v1
+    #  with:
+    #    sarif_file: cx.sarif
         
     - name: Checkmarx CxFlow Action SCA
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.5 #Github Action version
@@ -95,7 +95,7 @@ jobs:
 
         break_build: false
         scanners: SCA
-        bug_tracker: JIRA, Sarif
+        bug_tracker: JIRA
         
         JIRA_URL: ${{ secrets.JIRA_URL }} 
         JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
@@ -116,7 +116,7 @@ jobs:
                 --checkmarx.disable-clubbing=true \
                 --jira.issue.prefix="CX-SCA"
                 
-    - name: Upload SCA SARIF file
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: cx.sarif
+    #- name: Upload SCA SARIF file
+    #  uses: github/codeql-action/upload-sarif@v1
+    #  with:
+    #    sarif_file: cx.sarif
