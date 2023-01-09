@@ -51,9 +51,9 @@ jobs:
         bug_tracker: JIRA
         bug_tracker_impl: Sarif
         
-        JIRA_URL: ${{ secret.JIRA_URL }} 
-        JIRA_USERNAME: ${{ secret.JIRA_USERNAME }}
-        JIRA_TOKEN: ${{ secret.JIRA_TOKEN }}
+        JIRA_URL: ${{ secrets.JIRA_URL }} 
+        JIRA_USERNAME: ${{ secrets.JIRA_USERNAME }}
+        JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         JIRA_PROJECT: NOD
         JIRA_ISSUE_TYPE: BUG
         JIRA_OPEN_TRANSITION: In Progress
