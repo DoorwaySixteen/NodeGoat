@@ -69,7 +69,7 @@ jobs:
                 --cx-flow.filterSeverity \
                 --cx-flow.filterCategory \  
                 --checkmarx.disable-clubbing=true \
-                --jira.issue-prefix="CX-SAST"
+                --jira.issue-prefix=CX-SAST
                 
     #- name: Upload SAST SARIF file
     #  uses: github/codeql-action/upload-sarif@v1
@@ -80,7 +80,7 @@ jobs:
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.5 #Github Action version
       with:
         project: NodeGoat # <-- Insert Checkmarx SAST Project Name
-        #team: ${{ secrets.CHECKMARX_TEAMS }}
+        team: PatrickMichael
         #checkmarx_url: ${{ secrets.CHECKMARX_URL }} # To be stored in GitHub Secrets.
         #checkmarx_username: ${{ secrets.CHECKMARX_USER }} # To be stored in GitHub Secrets.
         #checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }} # To be stored in GitHub Secrets.
@@ -114,7 +114,7 @@ jobs:
                 --cx-flow.filterSeverity \
                 --cx-flow.filterCategory \  
                 --checkmarx.disable-clubbing=true \
-                --jira.issue-prefix="CX-SCA"
+                --jira.issue-prefix=CX-SCA
                 
     #- name: Upload SCA SARIF file
     #  uses: github/codeql-action/upload-sarif@v1
